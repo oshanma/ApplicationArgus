@@ -10,6 +10,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const tabBarColor = colorScheme === 'dark' ? '#1D1D1D' : '#FFFFFF'; // Set dynamic background
 
   return (
     <Tabs
@@ -20,24 +21,39 @@ export default function TabLayout() {
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
+            // Ensuring a better background for visibility
             position: 'absolute',
+            backgroundColor: tabBarColor,
+            borderTopWidth: 0, // Removes the default tab bar border for a cleaner look
+            elevation: 0, // Removes shadow effect
           },
-          default: {},
+          default: {
+            backgroundColor: tabBarColor,
+          },
         }),
       }}>
+      {/* Dashboard Tab */}
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Dashboard',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
+      {/* Explore Tab */}
       <Tabs.Screen
         name="explore"
         options={{
           title: 'Explore',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        }}
+      />
+      {/* Profile Tab */}
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
       />
     </Tabs>
